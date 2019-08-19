@@ -1,1 +1,0 @@
-?search=test%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E
