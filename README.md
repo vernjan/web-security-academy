@@ -6,3 +6,4 @@ Visit Web Security Academy to learn all the details!
 - [CSRF](CSRF.md)
 - [XSS Contexts](XSS-contexts.md)
 - [XSS Exploits](XSS-exploits.md)
+- [SQL injection](SQLi.md)
