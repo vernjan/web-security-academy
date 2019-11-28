@@ -9,3 +9,4 @@ Visit Web Security Academy to learn all the details!
 - [XSS Exploits](XSS-exploits.md)
 - [SQL injection](SQLi.md)
 - [Clickjacking](Clickjacking.md)
+- [Directory Traversal](DirectoryTraversal.md)
