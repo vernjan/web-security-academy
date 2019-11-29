@@ -1,4 +1,4 @@
-# SQLi
+# SQL injection
 
 ## Retrieving hidden data
 

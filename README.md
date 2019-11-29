@@ -3,10 +3,12 @@ My solutions for [Web Security Academy](https://portswigger.net/web-security).
 
 Visit Web Security Academy to learn all the details!
 
-- [CORS](CORS.md)
-- [CSRF](CSRF.md)
-- [XSS Contexts](XSS-contexts.md)
-- [XSS Exploits](XSS-exploits.md)
+- [Cross-origin resource sharing (CORS)](CORS.md)
+- [Clickjacking (UI redressing)](Clickjacking.md)
 - [SQL injection](SQLi.md)
-- [Clickjacking](Clickjacking.md)
-- [Directory Traversal](DirectoryTraversal.md)
+- [Cross-site scripting (contexts)](XSS-contexts.md)
+- [Cross-site scripting (exploits)](XSS-exploits.md)
+- [Cross-site request forgery (CSRF)](CSRF.md)
+- [Server-side request forgery (SSRF)](SSRF.md)
+- [OS command injection](CMDi.md)
+- [Directory traversal](DirectoryTraversal.md)

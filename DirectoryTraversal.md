@@ -1,4 +1,4 @@
-# Directory Traversal
+# Directory traversal
 
 ## File path traversal, simple case
 ```

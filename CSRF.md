@@ -1,4 +1,4 @@
-# CSRF
+# Cross-site request forgery (CSRF)
 
 ## CSRF vulnerability with no defenses
 ```html

