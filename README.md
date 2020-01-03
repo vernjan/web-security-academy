@@ -5,6 +5,7 @@ Visit Web Security Academy to learn all the details!
 
 - [Cross-origin resource sharing (CORS)](CORS.md)
 - [Clickjacking (UI redressing)](Clickjacking.md)
+- [Testing for WebSockets security vulnerabilities](WS.md)
 - [SQL injection](SQLi.md)
 - [Cross-site scripting (contexts)](XSS-contexts.md)
 - [Cross-site scripting (exploits)](XSS-exploits.md)
