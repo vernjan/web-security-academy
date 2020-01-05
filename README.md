@@ -3,6 +3,7 @@ My solutions for [Web Security Academy](https://portswigger.net/web-security).
 
 Visit Web Security Academy to learn all the details!
 
+- [Access control vulnerabilities and privilege escalation](AC.md)
 - [Cross-origin resource sharing (CORS)](CORS.md)
 - [Clickjacking (UI redressing)](Clickjacking.md)
 - [Testing for WebSockets security vulnerabilities](WS.md)
@@ -12,5 +13,6 @@ Visit Web Security Academy to learn all the details!
 - [Cross-site request forgery (CSRF)](CSRF.md)
 - [XML external entity (XXE) injection](XXE.md)
 - [Server-side request forgery (SSRF)](SSRF.md)
+- [HTTP request smuggling](Smuggling.md)
 - [OS command injection](CMDi.md)
 - [Directory traversal](DirectoryTraversal.md)
